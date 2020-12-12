@@ -1,91 +1,20 @@
+directions=[(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
 def check_adjacent(data, pos):
     occupied=0
-    i=0
-    while pos[0]-i>0:
-        i+=1
-        if data[pos[0]-i][pos[1]]=='#':
-            occupied+=1
-            break
-        elif data[pos[0]-i][pos[1]]=='L':
-            break
-
-    i=0
-    while pos[0]+i<len(data)-1:
-        i+=1
-        if data[pos[0]+i][pos[1]]=='#':
-            occupied+=1
-            break
-        elif data[pos[0]+i][pos[1]]=='L':
-            break
-
-    i=0
-    while pos[1]-i>0:
-        i+=1
-        if data[pos[0]][pos[1]-i]=='#':
-            occupied+=1
-            break
-        elif data[pos[0]][pos[1]-i]=='L':
-            break
-
-    i=0
-    while pos[1]+i<len(data[0])-1:
-        i+=1
-        if data[pos[0]][pos[1]+i]=='#':
-            occupied+=1
-            break
-        elif data[pos[0]][pos[1]+i]=='L':
-            break
-
-    i=0
-    while pos[0]-i>0 and pos[1]-i>0:
-        i+=1
-        if data[pos[0]-i][pos[1]-i]=='#':
-            occupied+=1
-            break
-        elif data[pos[0]-i][pos[1]-i]=='L':
-            break
-
-    i=0
-    while pos[0]-i>0 and pos[1]+i<len(data[0])-1:
-        i+=1
-        if data[pos[0]-i][pos[1]+i]=='#':
-            occupied+=1
-            break
-        elif data[pos[0]-i][pos[1]+i]=='L':
-            break
-
-    i=0
-    while pos[0]+i<len(data)-1 and pos[1]-i>0:
-        i+=1
-        if data[pos[0]+i][pos[1]-i]=='#':
-            occupied+=1
-            break
-        elif data[pos[0]+i][pos[1]-i]=='L':
-            break
-
-    i=0
-    while pos[0]+i<len(data)-1 and pos[1]+i<len(data[0])-1:
-        i+=1
-        if data[pos[0]+i][pos[1]+i]=='#':
-            occupied+=1
-            break
-        elif data[pos[0]+i][pos[1]+i]=='L':
-            break
+    for d in directions:
+        i=1
+        while pos[0]+d[0]*i>=0 and pos[1]+d[1]*i>=0 and pos[0]+d[0]*i<len(data) and pos[1]+d[1]*i<len(data[0]) and data[pos[0]+d[0]*i][pos[1]+d[1]*i]!='L':
+            if data[pos[0]+d[0]*i][pos[1]+d[1]*i]=='#':
+                occupied+=1
+                break
+            i+=1
     return occupied
-
-def pretty_print(data):
-    for row in data:
-        print()
-        for seat in row:
-            print(seat, end=' ')
-    print()
 
 with open('day11/input.txt') as f:
     data=[list(l) for l in f.read().splitlines()]
 seatnum=0
 while True:
     prevseatnum=seatnum
-    seatnum=0
     update=[]
     for i in range(len(data)):
         for j in range(len(data[0])):
@@ -94,9 +23,7 @@ while True:
                 update.append((i,j))
     for u in update:
         data[u[0]][u[1]]='#' if data[u[0]][u[1]]=='L' else 'L'
-    for row in data:
-        seatnum+=row.count('#')
-    # pretty_print(data)
+    seatnum=sum([row.count('#') for row in data])
     if seatnum==prevseatnum:
         print(seatnum)
         break
