@@ -28,4 +28,4 @@ count=0
 for m in messages:
     if m in matched_by_rule['0']:
         count+=1
-print(count)
+print(f"p1: {count}")
