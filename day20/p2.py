@@ -1,4 +1,4 @@
-from day20.Tile import Tile
+from tile import Tile
 import numpy as np
 
 def get_corner(tiles):
@@ -38,7 +38,7 @@ while first_in_line:
         current=current.get_adjacent_right(tiles)
     i+=1
         
-image=np.block([[t.matrix for t in l] for l in tile_image])
+image=np.block(tile_image)
 count=0
 for _ in range(2):
     for _ in range(2):
