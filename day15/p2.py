@@ -1,5 +1,4 @@
-with open('day15/input.txt') as f:
-    start=[int(l) for l in f.read().strip().split(',')]
+start=[int(n) for n in '12,20,0,6,1,17,7'.split(',')]
 last_seen=dict()
 for i,n in enumerate(start):
     last_seen[n]=i+1
